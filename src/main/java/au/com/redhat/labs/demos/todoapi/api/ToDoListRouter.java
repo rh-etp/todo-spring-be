@@ -42,7 +42,7 @@ public class ToDoListRouter implements ApiRouter {
 
     public final  static String BASE_PATH = "/api";
 
-    public final static String TODO_LIST_API_ENDPOINT = "/fetchFile";
+    public final static String TODO_LIST_API_ENDPOINT = "/todolist";
 
 
 }
