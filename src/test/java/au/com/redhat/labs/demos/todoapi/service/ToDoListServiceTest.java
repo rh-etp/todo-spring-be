@@ -44,31 +44,7 @@ public class ToDoListServiceTest extends AbstractIntegrationTest {
     @Autowired
     MongoOperations mongoOperations;
 
-    private static MongodProcess process;
 
-    @BeforeAll
-    public static void init() throws IOException {
-        Command command = Command.MongoD;
-
-        IRuntimeConfig runtimeConfig = new RuntimeConfigBuilder()
-                .defaults(command)
-                .artifactStore(new ExtractedArtifactStoreBuilder()
-                        .defaults(command)
-                        .download(new DownloadConfigBuilder()
-                                .defaultsForCommand(command)
-                        ))
-
-                .build();
-
-        MongodStarter starter = MongodStarter.getInstance(runtimeConfig);
-        MongodExecutable executable = starter.prepare(new MongodConfigBuilder()
-
-                .version(Version.Main.V3_2)
-
-                .net(new Net(27017, Network.localhostIsIPv6()))
-                .build());
-        process = executable.start();
-    }
 
     @BeforeEach
     public void setUp() {
@@ -79,7 +55,7 @@ public class ToDoListServiceTest extends AbstractIntegrationTest {
 
 
     @Test
-    void postPersonsTest() {
+    void postToDoTest() {
 
 
         ToDoTask toDoTask = new ToDoTask("10", "Masood", false);

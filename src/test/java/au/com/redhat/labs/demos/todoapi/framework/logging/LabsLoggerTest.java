@@ -25,7 +25,7 @@ public class LabsLoggerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(LabsLoggerTest.class);
 
     @Test
-    public void testBFSLogger() {
+    public void testLabsLogger() {
         //add logger to a mock
         ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
         final Appender mockAppender = mock(Appender.class);
@@ -36,9 +36,9 @@ public class LabsLoggerTest {
         String traceHeaderValue = UUID.randomUUID().toString();
         headers.add(TRACE_ID, traceHeaderValue);
 
-        LabsReactiveContext bfsReactiveContext = new LabsReactiveContext(headers);
+        LabsReactiveContext labsReactiveContext = new LabsReactiveContext(headers);
 
-        LabsLogger.log(bfsReactiveContext, () -> LOGGER.info("Received request for {}"));
+        LabsLogger.log(labsReactiveContext, () -> LOGGER.info("Received request for {}"));
 
         //verify MDC.clear
         Assert.assertNull(MDC.getCopyOfContextMap());
@@ -50,22 +50,22 @@ public class LabsLoggerTest {
 
 
     @Test
-    public void testBFSLoggerWithServerEvents() {
+    public void testLabsLoggerWithServerEvents() {
         //add logger to a mock
         ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
         final Appender mockAppender = mock(Appender.class);
-        when(mockAppender.getName()).thenReturn("BFSMOCK");
+        when(mockAppender.getName()).thenReturn("LABSMOCK");
         root.addAppender(mockAppender);
 
         HttpHeaders headers = new HttpHeaders();
         String traceHeaderValue = UUID.randomUUID().toString();
         headers.add(TRACE_ID, traceHeaderValue);
 
-        LabsReactiveContext bfsReactiveContext = new LabsReactiveContext(headers);
+        LabsReactiveContext labsReactiveContext = new LabsReactiveContext(headers);
 
         //verify log events
 
-        LabsLogger.log(bfsReactiveContext, SERVER_SENT, () -> LOGGER.info("Message sent to "));
+        LabsLogger.log(labsReactiveContext, SERVER_SENT, () -> LOGGER.info("Message sent to "));
 
         verify(mockAppender).doAppend(argThat((ArgumentMatcher) argument -> {
             return ((LoggingEvent) argument).getMDCPropertyMap().size() == 2;

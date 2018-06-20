@@ -31,10 +31,10 @@ public class ToDoListHandler extends AbstractApiHandler {
 
     public Mono<ServerResponse> saveToDoTask(final ServerRequest request) {
         return request.bodyToMono(ToDoTask.class)
-                .flatMap(personMongo -> toDoListMongoRepository.save(personMongo))
+                .flatMap(toDoTask -> toDoListMongoRepository.save(toDoTask))
                 .flatMap(this::serverResponse);
 
-//        return ok().body(personMongoRepository.findAll(), ToDoTask.class);
+
 
     }
 
