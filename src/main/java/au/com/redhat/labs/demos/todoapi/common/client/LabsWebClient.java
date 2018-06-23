@@ -43,7 +43,7 @@ public class LabsWebClient {
         return (clientRequest, next) -> Mono.subscriberContext()
                 .flatMap(context -> {
                     Optional<LabsReactiveContext> labsReactiveContextOptional = context.getOrEmpty(LabsReactiveContext.class);
-                    LabsReactiveContext labsReactiveContext = labsReactiveContextOptional.orElse(new LabsReactiveContext(clientRequest.headers()));
+                    LabsReactiveContext labsReactiveContext = labsReactiveContextOptional.orElse(new LabsReactiveContext("N/A"));
                     LabsLogger.log(labsReactiveContext, BoundaryEvents.CLIENT_SENT, () -> LOGGER.info("Calling Downstream system {}", clientRequest.url().toString()));
                     //can add some timing data here, if needed.
                     return next.exchange(clientRequest)

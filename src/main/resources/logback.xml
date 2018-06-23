@@ -19,23 +19,7 @@
 
     <logger name="com.github.tomakehurst.wiremock" level="DEBUG" additivity="false"/>
 
-    <!--<logger name="reactor.ipc.netty.channel.ChannelOperationsHandler" level="DEBUG" additivity="false">-->
-        <!--<appender-ref ref="async"/>-->
-    <!--</logger>-->
 
-    <!--<logger name="reactor.ipc.netty.http.server.HttpServer" level="DEBUG" additivity="false">-->
-        <!--<appender-ref ref="async"/>-->
-    <!--</logger>-->
-
-    <!--<logger name="org.springframework.cloud.sleuth.instrument.reactor" level="TRACE" additivity="false">-->
-    <!--<appender-ref ref="async"/>-->
-    <!--</logger>-->
-    <!--<logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG" additivity="false">-->
-        <!--<appender-ref ref="async"/>-->
-    <!--</logger>-->
-    <!--<logger name="org.springframework.cloud.sleuth.instrument.web" level="DEBUG" additivity="false">-->
-        <!--<appender-ref ref="async"/>-->
-    <!--</logger>-->
 
 
 

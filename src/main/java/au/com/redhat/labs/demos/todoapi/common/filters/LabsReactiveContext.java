@@ -25,12 +25,7 @@ public final class LabsReactiveContext {
     private final Map<String, String> labsMDCMap = new HashMap<>(5);
 
 
-    public LabsReactiveContext(HttpHeaders headers) {
-        String traceId = headers.getFirst(LABS_TRACE_ID);
-
-        if (StringUtils.isEmpty(traceId)) {
-            traceId = UUID.randomUUID().toString();
-        }
+    public LabsReactiveContext(String traceId) {
         labsMDCMap.put(LABS_TRACE_ID, traceId);
     }
 

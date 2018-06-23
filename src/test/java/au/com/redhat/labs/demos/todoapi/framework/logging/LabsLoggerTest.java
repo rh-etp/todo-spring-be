@@ -36,7 +36,7 @@ public class LabsLoggerTest {
         String traceHeaderValue = UUID.randomUUID().toString();
         headers.add(TRACE_ID, traceHeaderValue);
 
-        LabsReactiveContext labsReactiveContext = new LabsReactiveContext(headers);
+        LabsReactiveContext labsReactiveContext = new LabsReactiveContext(traceHeaderValue);
 
         LabsLogger.log(labsReactiveContext, () -> LOGGER.info("Received request for {}"));
 
@@ -61,7 +61,7 @@ public class LabsLoggerTest {
         String traceHeaderValue = UUID.randomUUID().toString();
         headers.add(TRACE_ID, traceHeaderValue);
 
-        LabsReactiveContext labsReactiveContext = new LabsReactiveContext(headers);
+        LabsReactiveContext labsReactiveContext = new LabsReactiveContext(traceHeaderValue);
 
         //verify log events
 

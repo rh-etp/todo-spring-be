@@ -2,10 +2,9 @@ package au.com.redhat.labs.demos.todoapi.common.filters;
 
 
 import au.com.redhat.labs.demos.todoapi.common.logger.LabsLogger;
+import brave.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -22,12 +21,18 @@ import java.net.URI;
  * @author faisalmasood fmasood@redhat.com
  */
 
-@Order(Ordered.LOWEST_PRECEDENCE - 200)
+
 @Component
 public class LabsServerFilter implements WebFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LabsServerFilter.class);
 
+
+    private final Tracer tracer;
+
+    public LabsServerFilter(Tracer tracer) {
+        this.tracer = tracer;
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) {
@@ -35,7 +40,8 @@ public class LabsServerFilter implements WebFilter {
         String path = getRequestPath(request.getURI());
 
 
-        LabsReactiveContext labsReactiveContext = new LabsReactiveContext(request.getHeaders());
+
+        LabsReactiveContext labsReactiveContext = new LabsReactiveContext(String.valueOf(tracer.currentSpan().context().traceId()));
         labsReactiveContext.populateResponseHeaders(serverWebExchange.getResponse().getHeaders());
         LabsLogger.log(labsReactiveContext, BoundaryEvents.SERVER_RECEIVED, () -> LOGGER.info("Received request for {}", path));
         serverWebExchange.getAttributes().put(LabsReactiveContext.class.getName(), labsReactiveContext);
