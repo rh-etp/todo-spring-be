@@ -44,13 +44,13 @@ public class LabsWebClient {
                 .flatMap(context -> {
                     Optional<LabsReactiveContext> labsReactiveContextOptional = context.getOrEmpty(LabsReactiveContext.class);
                     LabsReactiveContext labsReactiveContext = labsReactiveContextOptional.orElse(new LabsReactiveContext("N/A"));
-                    LabsLogger.log(labsReactiveContext, BoundaryEvents.CLIENT_SENT, () -> LOGGER.info("Calling Downstream system {}", clientRequest.url().toString()));
+                    LabsLogger.log(labsReactiveContext, BoundaryEvents.CLIENT_SENT, () -> LOGGER.info("Calling Downstream system {}", clientRequest.url()));
                     //can add some timing data here, if needed.
                     return next.exchange(clientRequest)
                             .doAfterSuccessOrError((clientResponse, throwable) -> {
                                 if (clientResponse != null) {
 
-                                    LabsLogger.log(labsReactiveContext, BoundaryEvents.CLIENT_RECEIVED, () -> LOGGER.info("Got Response from Downstream {}, {}", clientRequest.method(), clientRequest.url().toString()));
+                                    LabsLogger.log(labsReactiveContext, BoundaryEvents.CLIENT_RECEIVED, () -> LOGGER.info("Got Response from Downstream {}, {}", clientRequest.method(), clientRequest.url()));
                                 } else {
                                     LabsLogger.log(labsReactiveContext, BoundaryEvents.CLIENT_RECEIVED, () -> LOGGER.info("Got Error from Downstream {}, {}", clientRequest.method(), clientRequest.url().toString(), throwable));
                                 }
